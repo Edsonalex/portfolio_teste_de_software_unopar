@@ -1,8 +1,8 @@
 # 📚 Portfolio de Teste de Software - Unopar
 
-## Teste de Mutação: Validando a Qualidade dos Testes
+## Teste de Software: Executando e Validando a Qualidade dos Testes
 
-Este projeto demonstra uma abordagem completa para **validar a eficácia dos testes automatizados** através da técnica de **Teste de Mutação**, implementando boas práticas de **modularização e manutenibilidade** de código.
+Este projeto demonstra uma abordagem completa para **criar e validar a eficácia dos testes automatizados** através da técnica de **Teste de Mutação**, implementando boas práticas de **modularização e manutenibilidade** de código.
 
 ---
 
