@@ -1,48 +1,204 @@
-# Projeto de Teste de Mutação
+# 📚 Portfolio de Teste de Software - Unopar
 
-Este projeto é dedicado a teste de mutação, uma técnica importante para avaliar a eficácia dos testes automatizados. O objetivo principal é introduzir mutantes no código para verificar se os testes existentes conseguem detectar essas mudanças.
+## Teste de Mutação: Validando a Qualidade dos Testes
 
-## Estrutura do Projeto
+Este projeto demonstra uma abordagem completa para **validar a eficácia dos testes automatizados** através da técnica de **Teste de Mutação**, implementando boas práticas de **modularização e manutenibilidade** de código.
 
-O projeto contém os seguintes arquivos:
+---
 
-1. **maximo.py**: Código original que implementa a lógica principal.
-2. **mutantes_maximo.py**: Implementação dos mutantes gerados a partir do código original.
-3. **casos_de_teste_maximo.py**: Conjunto de casos de teste que são utilizados para verificar a funcionalidade do código.
-4. **logica_teste_mutacao.py**: Lógica para aplicar testes de mutação e verificar a detecção dos mutantes.
-5. **teste_mutacao_maximo.py**: Testes que são executados para validar a eficácia dos testes de mutação.
-6. **logica_de_teste.py**: Lógica geral para execução dos testes.
-7. **test_maximo.py**: Testes adicionais para o código original.
-8. **executar_testes_maximo.py**: Script para executar todos os testes de forma automatizada.
+## 🏗️ Arquitetura Modular - Separação de Responsabilidades
 
-## Mutantes Criados
+O projeto é estruturado em **módulos independentes** para facilitar manutenção, extensão e reutilização:
 
-Foram gerados 7 mutantes, contemplando os seguintes tipos:
-- **ROR (Replacement of Operators)**: Substituição de operadores lógicos e aritméticos.
-- **VDL (Variable Discrepancy Logic)**: Mudança na lógica de variáveis.
-- **SDL (Statement Deletion Logic)**: Exclusão de instruções relevantes no código.
+### 📦 Camada 1: Código Fonte
+- **`maximo.py`** - Função principal com validações robustas de tipo
 
-## Casos de Teste
+### 📋 Camada 2: Dados de Teste (Casos de Teste)
+- **`casos_de_teste_maximo.py`** - Define todos os casos de teste em estruturas de dados reutilizáveis
+  - `CASOS_TESTE_BASICOS` - 8 casos para lógica principal
+  - `CASOS_TESTE_VALIDACAO` - 14 casos para validação TDD
+  - `TODOS_OS_CASOS` - Agregação centralizada
 
-Os testes consistem em um total de 22 casos, divididos da seguinte forma:
-- **8 Casos Básicos**: Testes fundamentais que verificam as funcionalidades principais do código.
-- **14 Casos de Validação**: Testes robustos que garantem a validação das entradas e saídas, testando limites e condições especiais.
+**Benefício de manutenibilidade**: Adicionar novos casos de teste não requer modificação dos módulos de teste.
 
-## Como Executar os Testes
+### 🧬 Camada 3: Mutantes
+- **`mutantes_maximo.py`** - Implementação dos 7 mutantes gerados
+  - 3 mutantes ROR (Replacement of Relational Operators)
+  - 3 mutantes VDL (Value/Decision List)
+  - 1 mutante SDL (Statement Deletion)
 
-Para executar os testes, siga os passos abaixo:
-1. Certifique-se de que você tem o Python instalado em seu ambiente.
-2. Clonar o repositório:
-   ```bash
-   git clone https://github.com/Edsonalex/portfolio_teste_de_software_unopar.git
-   cd portfolio_teste_de_software_unopar
-   ```
-3. Execute o script de testes:
-   ```bash
-   python executar_testes_maximo.py
-   ```
-4. Verifique os resultados no console para ver a eficácia dos testes.
+**Benefício de manutenibilidade**: Mutantes isolados facilitam adição de novos tipos de mutação.
 
-## Conclusão
+### ⚙️ Camada 4: Lógica de Teste (Reutilizável)
+- **`logica_teste_mutacao.py`** - Motor independente para teste de mutação
+  - `executar_teste_contra_funcao()` - Executa casos contra qualquer função
+  - `testar_mutante()` - Testa um mutante
+  - `calcular_mutation_score()` - Calcula métrica de qualidade
 
-Este projeto proporciona uma abordagem eficaz para a identificação de fraquezas nos testes automatizados através da técnica de teste de mutação. Através da implementação de mutantes e execução de testes, podemos melhorar continuamente a qualidade do código.
+- **`logica_de_teste.py`** - Lógica de testes unitários reutilizável
+  - `TestMaximoBasicos` - Suite para testes básicos
+  - `TestMaximoValidacao` - Suite para testes de validação
+
+**Benefício de manutenibilidade**: Lógica desacoplada permite reutilização em outros projetos.
+
+### 🚀 Camada 5: Executores (Orquestração)
+
+#### **ESTÁGIO 1: Testes Automatizados**
+- **`executar_testes_maximo.py`** - Executa testes automatizados
+  - Importa `logica_de_teste.py` para suite de testes
+  - Importa `casos_de_teste_maximo.py` para dados
+  - Gera relatório com taxa de sucesso
+  - **Saída**: Validação se a função funciona corretamente
+
+```bash
+python executar_testes_maximo.py
+```
+
+#### **ESTÁGIO 2: Testes de Mutação (Testes dos Testes)**
+- **`teste_mutacao_maximo.py`** - Valida se os testes conseguem detectar mutações
+  - Importa `logica_teste_mutacao.py` para motor
+  - Importa `mutantes_maximo.py` para mutantes
+  - Importa `casos_de_teste_maximo.py` para casos
+  - Gera relatório com **Mutation Score**
+  - **Saída**: Qualidade dos testes (detecta fraquezas)
+
+```bash
+python teste_mutacao_maximo.py
+```
+
+---
+
+## 🔄 Fluxo de Dois Estágios de Teste
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  ESTÁGIO 1: Testes Automatizados                           │
+│  (Valida: A função funciona corretamente?)                 │
+├─────────────────────────────────────────────────────────────┤
+│ executar_testes_maximo.py                                   │
+│        ↓                                                     │
+│ Importa: logica_de_teste.py + casos_de_teste_maximo.py    │
+│        ↓                                                     │
+│ Executa: 22 casos de teste contra maximo.py               │
+│        ↓                                                     │
+│ Resultado: ✅ Taxa de sucesso (%)                          │
+└─────────────────────────────────────────────────────────────┘
+                         ↓↓↓
+┌─────────────────────────────────────────────────────────────┐
+│  ESTÁGIO 2: Teste de Mutação                               │
+│  (Valida: Os testes são de boa qualidade?)                 │
+├─────────────────────────────────────────────────────────────┤
+│ teste_mutacao_maximo.py                                     │
+│        ↓                                                     │
+│ Importa: logica_teste_mutacao.py + mutantes_maximo.py     │
+│        ↓                                                     │
+│ Executa: 22 casos de teste contra 7 mutantes              │
+│        ↓                                                     │
+│ Resultado: 📊 Mutation Score (%) - Qualidade dos Testes   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📊 Casos de Teste
+
+**Total: 22 casos distribuídos em dois grupos**
+
+### Básicos (8 casos)
+- `CT-01` a `CT-08`: Testes de comparação entre números (positivos, negativos, iguais)
+
+### Validação TDD (14 casos)
+- `CT-09` a `CT-22`: Rejeição de tipos inválidos (string, float, boolean, None, list, dict)
+
+---
+
+## 🧬 Mutantes Gerados (7 total)
+
+| ID | Nome | Tipo | Descrição |
+|---|---|---|---|
+| 1 | ROR: > → >= | ROR | Muta operador relacional |
+| 2 | ROR: > → < | ROR | Inverte comparação |
+| 3 | ROR: > → == | ROR | Muda lógica de comparação |
+| 4 | VDL: retorna b no if | VDL | Altera valor de retorno |
+| 5 | VDL: retorna a no else | VDL | Altera valor de retorno |
+| 6 | SDL: remove else | SDL | Remove instrução |
+| 7 | VDL: inverte retornos | VDL | Inverte múltiplos retornos |
+
+---
+
+## 🚀 Como Executar
+
+### Pré-requisitos
+```bash
+Python 3.7+
+```
+
+### Instalação
+```bash
+git clone https://github.com/Edsonalex/portfolio_teste_de_software_unopar.git
+cd portfolio_teste_de_software_unopar
+```
+
+### Execução - Estágio 1: Testes Automatizados
+```bash
+python executar_testes_maximo.py
+```
+**Verifica**: A função `maximo()` funciona corretamente?
+
+### Execução - Estágio 2: Teste de Mutação
+```bash
+python teste_mutacao_maximo.py
+```
+**Verifica**: Os testes conseguem detectar defeitos?
+
+---
+
+## 💡 Benefícios da Arquitetura Modular
+
+### ✅ Manutenibilidade
+- Cada módulo tem responsabilidade única e bem definida
+- Mudanças em casos de teste não afetam a lógica de teste
+- Adição de mutantes não requer modificação de módulos existentes
+
+### ✅ Reutilizabilidade
+- `logica_teste_mutacao.py` pode ser reutilizado para outras funções
+- `logica_de_teste.py` pode ser adaptado para novos testes
+- `casos_de_teste_maximo.py` serve como exemplo de estrutura de dados
+
+### ✅ Testabilidade
+- Cada módulo pode ser testado independentemente
+- Fácil identificar qual componente falhou
+- Facilita debug e correção
+
+### ✅ Escalabilidade
+- Novos mutantes são adicionados sem refatoração
+- Novos casos de teste não quebram código existente
+- Padrão pode ser replicado para outras funções
+
+---
+
+## 📈 Interpretação dos Resultados
+
+### Estágio 1 (Testes Automatizados)
+```
+✅ Taxa de Sucesso: 100% = Função implementada corretamente
+❌ Taxa de Sucesso < 100% = Bugs na função
+```
+
+### Estágio 2 (Teste de Mutação)
+```
+📊 Mutation Score ≥ 70% = Testes de BOA qualidade
+⚠️  Mutation Score < 70% = Testes FRÁGEIS - precisam melhorar
+```
+
+**Mutation Score** indica o percentual de mutantes detectados pelos testes. Mutantes "vivos" representam casos de teste faltando.
+
+---
+
+## 👤 Autor
+**Edsonalex** - Portfolio UNOPAR
+
+---
+
+## 📝 Licença
+Projeto desenvolvido para fins educacionais.
